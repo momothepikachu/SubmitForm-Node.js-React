@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -7,10 +6,11 @@ class App extends Component {
     response: ''
   };
 
-  componentDidMount() {
+  componentDidMount=()=> {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
       .catch(err => console.log(err));
+    this.addMessages({name:'Tim', message:'Hello'})
   }
 
   callApi = async () => {
@@ -21,26 +21,24 @@ class App extends Component {
 
     return body;
   };  
+  addMessages = (message)=>{
+    document.getElementById('messages').insertAdjacentHTML('afterbegin',`<h4> ${message.name}</h4> <p>${message.message}</p>`)
+  }  
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <div className="container">
+        <br/>
+        <p className="App-intro">{this.state.response}</p>
+        <div className="jumbotron">
+          <h1 className="display-4">Send Messageeeeee</h1>
           <br/>
-          <p className="App-intro">{this.state.response}</p>
-        </header>
-      </div>
+          <input type="text" className="form-control" placeholder="Name"/>
+          <br/>
+          <button id="send" className="btn btn-success" onClick={this.componentDidMount}>Send</button>
+        </div>
+        <div id="messages"></div>
+      </div>      
     );
   }
 }
