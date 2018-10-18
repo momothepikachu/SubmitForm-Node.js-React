@@ -50,7 +50,7 @@ class App extends Component {
         <div className="jumbotron">
           <h1 className="display-4">Send Message</h1>
           <br/>
-          <input id="name" type="text" className="form-control" placeholder="Name"/>
+          <input id="name" type="text" className="form-control" placeholder="Name" autocomplete="off"/>
           <br/>
           <textarea id="message" className="form-control" placeholder="Message"></textarea>
           <br/>  
