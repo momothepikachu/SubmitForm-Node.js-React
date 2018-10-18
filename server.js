@@ -21,15 +21,34 @@ app.get('/messages', (req, res)=>{
   })
 })
 
-app.post('/messages', (req, res)=>{
-  let message = new Message(req.body)
-  message.save((err)=>{
-      if(err){sendStatus(500)}
-      else {
-          io.emit('message', req.body)
-          res.sendStatus(200)
-      }
+app.get('/messages/:user', (req, res)=>{
+  let user = req.params.user
+  Message.find({name: user},(err, messages)=>{
+      res.send(messages)
   })
+})
+
+app.post('/messages', async (req, res)=>{
+  try {
+      // throw "some error" //for testing purpose
+      let message = new Message(req.body)
+      let messageSaved = await message.save()
+      console.log('Message saved!', messageSaved)
+      let censored = await Message.findOne({message: 'badword'})
+      if(censored){
+          console.log('Censored words found', censored)
+          await Message.deleteOne({_id: censored.id})
+          console.log('Censored word deleted!')
+      } else {
+          io.emit('message', req.body)
+      }
+      res.sendStatus(200)
+  } catch (error){
+      res.sendStatus(500)
+      return console.error(error)
+  } finally {
+    console.log('Message post called')
+  }
 })
 
 io.on('connection', (socket)=>{

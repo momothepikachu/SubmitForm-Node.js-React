@@ -5,6 +5,7 @@
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "client": "cd client && yarn start",
+    "test": "jasmine",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
@@ -17,6 +18,8 @@
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.0",
+    "jasmine": "^3.2.0",
+    "request": "^2.88.0"
   }
 }

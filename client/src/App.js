@@ -25,7 +25,7 @@ class App extends Component {
     return body;
   };  
   addMessages = (message)=>{
-    document.getElementById('messages').insertAdjacentHTML('afterbegin',`<h4> ${message.name}</h4> <p>${message.message}</p>`)
+    document.getElementById('messages').insertAdjacentHTML('beforeend',`<h4> ${message.name}</h4> <p>${message.message}</p>`)
   }  
   postMessage = (message)=>{
     fetch('/messages',{
